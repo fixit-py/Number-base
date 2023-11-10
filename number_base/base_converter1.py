@@ -148,10 +148,6 @@ def perform_arithmetric_operation(number1,number2,operation,from_base):
         raise ValueError("Invalid Operation")
     return decimal_to_base(result,from_base)
 
-
-#decimal_to_base(result,from_base)
-
-
 def radixcomplement(number, from_base):
     # Check if the number is negative
    
@@ -180,93 +176,27 @@ def radixcomplement(number, from_base):
     return complement_str
 
 # Example usage:
-radixcomplement(123, 10)
+
 def diminishedradixcomplement(number, from_base):
     you = radixcomplement(number, from_base)
     dim = perform_arithmetric_operation(str(you),1,"-",from_base)
     return dim
 
-def IEEE(number,from_base):
-    number = convert_base_to_base(number,from_base,2)
-    count = 0
-    for char in number:
-        print(char)
-        count = count + 1
-    count = count - 1
-    print(count)
-    mantissa = 127 + count
-    mantissa =  convert_base_to_base(number,from_base,2)
-    return number
-print(IEEE(132,10))  
-
-#print(decimal_to_base(1.9789298498448, 15))
-print(base_to_decimal("1000",2))
-#print(decimal_to_base(-346.7,36))
-#print(decimal_to_base(-3466.9,5))
-#print(decimal_to_base(446.7,5))
-#print(decimal_to_base(346.7,5))
-#print(decimal_to_base(-346.766643,5))
-#print(decimal_to_base(-836126,15))
-#print(decimal_to_base(836126,16))
-#print(decimal_to_base(1.9789298498448,14))
-print(convert_base_to_base("-1005.11",6,9))
-#print(perform_arithmetric_operation("-123","102","+",35))
-print(radixcomplement("CAFE27",16))
-print(diminishedradixcomplement("CAFE27",16))
+# def IEEE(number,from_base):
+#     number = convert_base_to_base(number,from_base,2)
+#     count = 0
+#     for char in number:
+#         print(char)
+#         count = count + 1
+#     count = count - 1
+#     print(count)
+#     mantissa = 127 + count
+#     mantissa =  convert_base_to_base(number,from_base,2)
+#     return number
 
 
-class MyClass:
-    def __init__(self, from_val, and_val,fin_base):
-        self.from_val = from_val
-        self.and_val = and_val
-        self.fin_base = fin_base
+
+
         
-    def add(self):
-        return self.from_val + self.and_val
-    
-    def decimal_to_base(self,number: float):
-        # Checks if the input number is negative
-        is_negative = False
-        if number < 0:
-            is_negative = True
-            # Make the number positive for processing
-            number = abs(number)
-    
-        base_digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"  # Characters for base 36
-    
-        # Separates the integer and fractional parts of the number
-        int_part = int(number)
-        fraction_part = number - int_part
-        final_value = ""  # Initializes an empty string
-    
-        # Converts integer part to the desired base
-        while int_part > 0:
-            remainder = int_part % fin_base
-            final_value = base_digits[remainder] + final_value
-            int_part //= fin_base
-    
-        # Handles the case when the integer part is 0
-        if final_value == "":
-            final_value = "0"
-    
-        # Adds a decimal point if there is a fractional part
-        if fraction_part > 0:
-            final_value += "."
-    
-        # Converts fractional part to the desired base with a limited number of digits
-        max_fraction_digits = 10
-        current_fraction_digits = 0
-        while fraction_part > 0 and current_fraction_digits < max_fraction_digits:
-            fraction_part *= fin_base
-            digit = int(fraction_part)
-            final_value += base_digits[digit]
-            fraction_part -= digit
-            current_fraction_digits += 1
-    
-        # Convert the final result back to a float and apply a negative sign if necessary
-        if is_negative:
-            final_value = "-" + final_value
-    
-        return final_value        
     
     
