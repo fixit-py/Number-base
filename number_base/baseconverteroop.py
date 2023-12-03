@@ -328,58 +328,109 @@ class Numberbase:
         # Perform arithmetic operation to get the diminished radix complement
         dim = self.perform_arithmetric_operation(str(you), 1, "-", from_base)
         return dim
-        
-    def base_to_binary_float(self, number:float|int) -> list[str]:
-    """
-    Converts a number to 32 bit binary float
-       Args: 
-        number (float/int): The number to convert. 
-
-       Returns:
-        list[str]: 3 elements, sign(a 1 or 0 representing negative or positive respectively), exponent and mantissa
-    """
-    output = [] #ouput array
-    is_negative = False
+   
+    def base_to_binary_float(self,base, number:float|int) -> list[str]:
+        """
+        Converts a number to 32 bit binary float
+           Args: 
+            number (float/int): The number to convert. 
     
-    #checks if number is negative
-    if number < 0:
-        number = abs(number)
-        is_negative = True
-
-    #Separates the integer and fractional parts of the number
-    int_part = number // 1
-    frac_part = number - int_part
-
-    #binary representation for the integer and fractional parts of the number
-    int_base_2_rep = self.convert_base_to_base(int_part,10, 2)
-    frac_base_2_rep = self.convert_base_to_base(frac_part,10, 2)
-    exp = len(int_base_2_rep) - 1
-
-    if frac_base_2_rep == '0':
-        mantissa = int_base_2_rep
-
-    else:
-        point_index = frac_base_2_rep.find('.')
-        mantissa = int_base_2_rep[1:] +  frac_base_2_rep[point_index+1:]
-
-    e_b = exp + 127
-    decimal_e_b = self.convert_base_to_base(e_b, 10,2)
-
-    #Checks the sign to determine if it's a 1 or 0
-    if(is_negative):
-        output.append('1')
-    else:
-        output.append('0')
-
-    output.append(decimal_e_b)
-
-    #Fill out with 0's to make it 32 bit
-    if len(mantissa) < 23:
-        total = 23 - len(mantissa)
-        added_zeroes = '0' * total
-        mantissa = mantissa + added_zeroes
-        output.append(mantissa)
-    return output
+           Returns:
+            list[str]: 3 elements, sign(a 1 or 0 representing negative or positive respectively), exponent and mantissa
+        """
+        output = [] #ouput array
+        is_negative = False
+        
+        #checks if number is negative
+        if number < 0:
+            number = abs(number)
+            is_negative = True
+        
+        #Separates the integer and fractional parts of the number
+        int_part = int(number)
+        frac_part = number - int_part
+        
+        #binary representation for the integer and fractional parts of the number
+        int_base_2_rep = self.convert_base_to_base(int_part,base, 2)
+        frac_base_2_rep = self.convert_base_to_base(frac_part,base, 2)
+        exp = len(int_base_2_rep) - 1
+        
+        if frac_base_2_rep == '0':
+            mantissa = int_base_2_rep
+        
+        else:
+            point_index = frac_base_2_rep.find('.')
+            mantissa = int_base_2_rep[1:] + frac_base_2_rep[point_index+1:]
+        
+        e_b = exp + 127
+        decimal_e_b = self.convert_base_to_base(e_b, 10,2)
+        
+        #Checks the sign to determine if it's a 1 or 0
+        if(is_negative):
+            output.append('1')
+        else:
+            output.append('0')
+        
+        output.append(decimal_e_b)
+        
+        #Fill out with 0's to make it 32 bit
+        if len(mantissa) < 23:
+            total = 23 - len(mantissa)
+            added_zeroes = '0' * total
+            mantissa = mantissa[1:] + added_zeroes
+            output.append(mantissa)
+        return output    
+    def base_to_binary_double(self,base, number:float|int) -> list[str]:
+        """
+        Converts a number to 32 bit binary float
+           Args: 
+            number (float/int): The number to convert. 
+    
+           Returns:
+            list[str]: 3 elements, sign(a 1 or 0 representing negative or positive respectively), exponent and mantissa
+        """
+        output = [] #ouput array
+        is_negative = False
+        
+        #checks if number is negative
+        if number < 0:
+            number = abs(number)
+            is_negative = True
+        
+        #Separates the integer and fractional parts of the number
+        int_part = int(number)
+        frac_part = number - int_part
+        
+        #binary representation for the integer and fractional parts of the number
+        int_base_2_rep = self.convert_base_to_base(int_part,base, 2)
+        frac_base_2_rep = self.convert_base_to_base(frac_part,base, 2)
+        exp = len(int_base_2_rep) - 1
+        
+        if frac_base_2_rep == '0':
+            mantissa = int_base_2_rep
+        
+        else:
+            point_index = frac_base_2_rep.find('.')
+            mantissa = int_base_2_rep[1:] + frac_base_2_rep[point_index+1:]
+        
+        e_b = exp + 1023
+        decimal_e_b = self.convert_base_to_base(e_b, 10,2)
+        
+        #Checks the sign to determine if it's a 1 or 0
+        if(is_negative):
+            output.append('1')
+        else:
+            output.append('0')
+        
+        output.append(decimal_e_b)
+        
+        #Fill out with 0's to make it 32 bit
+        if len(mantissa) < 23:
+            total = 23 - len(mantissa)
+            added_zeroes = '0' * total
+            mantissa = mantissa[1:] + added_zeroes
+            output.append(mantissa)
+        return output  
     
 
     
