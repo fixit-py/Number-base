@@ -382,7 +382,7 @@ class Numberbase:
         return output    
     def base_to_binary_double(self,base, number:float|int) -> list[str]:
         """
-        Converts a number to 32 bit binary float
+        Converts a number to 64 bit binary float
            Args: 
             number (float/int): The number to convert. 
     
